@@ -3,7 +3,7 @@ import { options } from "api";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-export const Home = ()=> {
+const Home = ()=> {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
@@ -22,6 +22,7 @@ export const Home = ()=> {
         <ul>
             {items.map((option)=> (
                 <li key={option.id}>
+                    <img src={`https://image.tmdb.org/t/p/w200${option.poster_path}`} alt={option.original_title} />
                     <Link to={`/movies/${option.id}`}>{option.title}</Link>
                     </li>
                     
@@ -29,3 +30,5 @@ export const Home = ()=> {
         </ul>
     );
 };
+
+export default Home;

@@ -4,7 +4,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { getMovieDetailsOptions } from "api";
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
     const [movieData, setMovieData] = useState(null);
     const { movieId } = useParams();
 
@@ -32,3 +32,5 @@ export const MovieDetails = () => {
         </div>
     );
 };
+
+export default MovieDetails;
