@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const options = {
   method: 'GET',
   url: 'https://api.themoviedb.org/3/trending/movie/day',
@@ -21,18 +23,23 @@ export const getMovieDetailsOptions = (movieId) => {
   };
 
 
- export const getMovies = {
-  method: 'GET',
-  url: 'https://api.themoviedb.org/3/search/movie',
-  query: '', // ваш пошуковий запит
-    include_adult: false, // включити/виключити фільми для дорослих
-    language: 'en-US', // мова запиту
-    page: 1, // сторінка результатів
-    region: '', // регіон
-    year: '', // рік
-    primary_release_year: '',
-  headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwODA3ZDJhN2IzNjZjOGRkMjBiM2UxN2IxMDQ5NTAyOSIsInN1YiI6IjY0ZmYzOTczZWZlYTdhMDExYWI3N2E5OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WfuiyWNSMnK0XUfRzXRBAAegiGGslDwG9EegGgPDSdI'
-  }
-};
+  export const getMovies = async (query) => {
+    try {
+      const response = await axios.get('https://api.themoviedb.org/3/search/movie', {
+        params: {
+          include_adult: false,
+          language: 'en-US',
+          query: query,
+        },
+        headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwODA3ZDJhN2IzNjZjOGRkMjBiM2UxN2IxMDQ5NTAyOSIsInN1YiI6IjY0ZmYzOTczZWZlYTdhMDExYWI3N2E5OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WfuiyWNSMnK0XUfRzXRBAAegiGGslDwG9EegGgPDSdI',
+        },
+      });
+      return response.data.results;
+    } catch (error) {
+      console.error('Error fetching movies:', error);
+      throw error;
+    }
+  };
+  
