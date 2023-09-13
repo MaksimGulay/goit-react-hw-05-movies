@@ -1,4 +1,4 @@
-import React, { useState, } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getMovies } from 'api';
 
@@ -7,7 +7,7 @@ const Movies = () => {
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState('');
 
-  const handleSubmit = async (evt) => {
+  const handleSubmit = async evt => {
     evt.preventDefault();
     setLoading(true);
 
@@ -20,7 +20,7 @@ const Movies = () => {
     }
   };
 
-  const handleInputChange = (event) => {
+  const handleInputChange = event => {
     setQuery(event.target.value);
   };
 
@@ -39,27 +39,25 @@ const Movies = () => {
         <div>Loading...</div>
       ) : (
         <ul>
-          {/* {movies.map(movie => (
+          {movies.map(movie => (
             <li key={movie.id}>
-              
-              {movie.poster_path && (
-                <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.original_title} />
+              {movie.poster_path ? (
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                  alt={movie.original_title}
+                />
+              ) : (
+                <div
+                  style={{
+                    height: '300px',
+                    width: '200px',
+                    backgroundColor: 'lightgray',
+                  }}
+                ></div>
               )}
               <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
             </li>
-          ))} */}
-
-{movies.map(movie => (
-  <li key={movie.id}>
-    {movie.poster_path ? (
-      <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.original_title} />
-    ) : (
-      <div style={{ height: '300px',width: '200px',  backgroundColor: 'lightgray' }}></div>
-    )}
-    <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
-  </li>
-))}
-
+          ))}
         </ul>
       )}
     </div>
@@ -67,4 +65,3 @@ const Movies = () => {
 };
 
 export default Movies;
-
