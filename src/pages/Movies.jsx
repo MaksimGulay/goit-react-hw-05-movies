@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,  } from 'react-router-dom';
 import { getMovies } from 'api';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState('');
+  
 
   const handleSubmit = async evt => {
     evt.preventDefault();
