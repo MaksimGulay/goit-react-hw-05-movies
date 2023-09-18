@@ -1,119 +1,18 @@
-// import { useState } from 'react';
-// import axios from 'axios';
-// import { getCast } from 'api';
-
-// const Cast = () => {
-//   const [casts, setCasts] = useState([]);
-
-//   axios;
-//   const casts = casts
-//     .request(getCast)
-//     .then(function (response) {
-//       console.log(response.data);
-//     })
-//     .catch(function (error) {
-//       console.error(error);
-//     });
-
-//   return (
-//     <div>
-//       <ul>
-//         {casts.map(cast => (
-//           <li key={cast.id}>
-//             <p></p>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Cast;
-
-// -------------------------------------------------------------------------
-
-// import { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { getCast } from 'api';
-// import { useParams } from 'react-router-dom';
-
-// const Cast = ({ movieId }) => {
-//   const [casts, setCasts] = useState([]);
-//   const [loadind, setLoading] = useState(false);
-
-//   useEffect(() => {
-//     const fetchCasts = async () => {
-//       try {
-//         const response = await axios.get(
-//           `https://api.themoviedb.org/3/movie/${movieId}/credits`,
-//           {
-//             params: {
-//               language: 'en-US',
-//               page: '1',
-//             },
-//             headers: {
-//               accept: 'application/json',
-//               Authorization:
-//                 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwODA3ZDJhN2IzNjZjOGRkMjBiM2UxN2IxMDQ5NTAyOSIsInN1YiI6IjY0ZmYzOTczZWZlYTdhMDExYWI3N2E5OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WfuiyWNSMnK0XUfRzXRBAAegiGGslDwG9EegGgPDSdI', // Add your API key here
-//             },
-//           }
-//         );
-
-//         setCasts(response.data.results);
-//         setLoading(false);
-//       } catch (error) {
-//         console.error('Error fetching reviews:', error);
-//         setLoading(false);
-//       }
-//     };
-//     fetchCasts();
-//   }, [movieId]);
-
-//   return (
-//     <div>
-//       <h2>Casts</h2>
-//       {loadind ? (
-//         <div>Loading casts...</div>
-//       ) : (
-//         <ul>
-//           {casts.map(cast => (
-//             <li key={cast.id}>
-//               <p>{cast.name}</p>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Cast;
-
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getCast } from 'api';
+import { useParams } from 'react-router-dom';
 
-const Cast = ({ movieId }) => {
+const CastNew = () => {
   const [casts, setCasts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { movieId } = useParams();
 
   useEffect(() => {
     const fetchCasts = async () => {
       try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}/credits`,
-          {
-            params: {
-              language: 'en-US',
-              page: '1',
-            },
-            headers: {
-              accept: 'application/json',
-              Authorization:
-                'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwODA3ZDJhN2IzNjZjOGRkMjBiM2UxN2IxMDQ5NTAyOSIsInN1YiI6IjY0ZmYzOTczZWZlYTdhMDExYWI3N2E5OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WfuiyWNSMnK0XUfRzXRBAAegiGGslDwG9EegGgPDSdI', // Add your API key here
-            },
-          }
-        );
-
+        const result = getCast(movieId);
+        const response = await axios.request(result);
         setCasts(response.data.cast);
         setLoading(false);
       } catch (error) {
@@ -121,6 +20,7 @@ const Cast = ({ movieId }) => {
         setLoading(false);
       }
     };
+
     fetchCasts();
   }, [movieId]);
 
@@ -146,4 +46,4 @@ const Cast = ({ movieId }) => {
   );
 };
 
-export default Cast;
+export default CastNew;

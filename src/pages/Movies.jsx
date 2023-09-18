@@ -26,6 +26,7 @@ const Movies = () => {
 
   return (
     <div>
+      <nav><Link to="movies">Go back</Link></nav>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
