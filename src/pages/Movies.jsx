@@ -1,62 +1,72 @@
-import React, { useState } from 'react';
-import { Link,  } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { getMovies } from 'api';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get('query');
   
-
-  const handleSubmit = async evt => {
-    evt.preventDefault();
-    setLoading(true);
-
-    try {
-      const results = await getMovies(query);
-      setMovies(results);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
+  useEffect(() => {
+    const fetchMovie = async () => {
+      if (searchQuery) {
+        setLoading(true);
+        try {
+          const resulsts = await getMovies(searchQuery);
+          setMovies(resulsts);
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+          console.error('Error fetching movies:', error);
+        }
+      }
+    };
+    fetchMovie()
+  }, [searchQuery]);
+  
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setSearchParams({ query: query});
   };
-
-  const handleInputChange = event => {
-    setQuery(event.target.value);
-  };
-
-  return (
-    <div>
-      <nav><Link to="movies">Go back</Link></nav>
+    
+    const handleInputChange = event => {
+      setQuery(event.target.value);
+    };
+    
+    return (
+      <div>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={query}
+          name="searchQuery"
           onChange={handleInputChange}
           placeholder="Search movies..."
-        />
+          />
         <button type="submit">Search</button>
       </form>
       {loading ? (
         <div>Loading...</div>
-      ) : (
+        ) : (
         <ul>
           {movies.map(movie => (
             <li key={movie.id}>
               {movie.poster_path ? (
                 <img
-                  src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                  alt={movie.original_title}
+                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                alt={movie.original_title}
                 />
-              ) : (
-                <div
+                ) : (
+                  <div
                   style={{
                     height: '300px',
                     width: '200px',
                     backgroundColor: 'lightgray',
                   }}
-                ></div>
-              )}
+                  ></div>
+                  )}
               <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
             </li>
           ))}
@@ -64,6 +74,5 @@ const Movies = () => {
       )}
     </div>
   );
-};
-
+}
 export default Movies;

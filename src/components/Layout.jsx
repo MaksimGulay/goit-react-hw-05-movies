@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export const Layout = () => {
+const Layout = () => {
   return (
     <div>
       <div>
@@ -12,3 +12,4 @@ export const Layout = () => {
     </div>
   );
 };
+export default Layout;

@@ -26,7 +26,6 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <nav><Link to="/">Go back</Link></nav>
       <h2>{movieData.original_title}</h2>
       <img
         src={`https://image.tmdb.org/t/p/w200${movieData.poster_path}`}
@@ -45,5 +44,3 @@ const MovieDetails = () => {
 };
 
 export default MovieDetails;
-
-
