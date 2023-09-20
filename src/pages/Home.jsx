@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { options } from 'api';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Home = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     axios
@@ -28,11 +29,14 @@ const Home = () => {
         <ul>
           {items.map(option => (
             <li key={option.id}>
-              <img
-                src={`https://image.tmdb.org/t/p/w200${option.poster_path}`}
-                alt={option.original_title}
-              />
-              <Link to={`/movies/${option.id}`}>{option.title}</Link>
+              <Link to={`/movies/${option.id}`} state={{ from: location }}>
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${option.poster_path}`}
+                  alt={option.original_title}
+                />
+
+                <div>{option.title}</div>
+              </Link>
             </li>
           ))}
         </ul>

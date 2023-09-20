@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useLocation} from 'react-router-dom';
 import { getMovies } from 'api';
 
 const Movies = () => {
@@ -8,6 +8,7 @@ const Movies = () => {
   const [query, setQuery] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get('query');
+  const location = useLocation();
   
   useEffect(() => {
     const fetchMovie = async () => {
@@ -37,6 +38,7 @@ const Movies = () => {
     
     return (
       <div>
+        {/* <div><Link to >Go back</Link></div> */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -53,6 +55,7 @@ const Movies = () => {
         <ul>
           {movies.map(movie => (
             <li key={movie.id}>
+              <Link to={`/movies/${movie.id}`} state={{ from: location }}>
               {movie.poster_path ? (
                 <img
                 src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
@@ -67,7 +70,8 @@ const Movies = () => {
                   }}
                   ></div>
                   )}
-              <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+                  <div>{movie.title}</div>
+              </Link>
             </li>
           ))}
         </ul>
