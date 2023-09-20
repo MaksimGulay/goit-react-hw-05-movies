@@ -38,7 +38,6 @@ const Movies = () => {
     
     return (
       <div>
-        {/* <div><Link to >Go back</Link></div> */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"

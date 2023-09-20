@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getCast } from 'api';
-import { useParams } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 
 const CastNew = () => {
   const [casts, setCasts] = useState([]);
@@ -33,8 +33,17 @@ const CastNew = () => {
         <ul>
           {casts.length > 0 ? (
             casts.map(cast => (
-              <li key={cast.id}>
-                <img src={`https://image.tmdb.org/t/p/w200${cast.profile_path}`} alt={cast.name} />
+              <li key={cast.id}> 
+              {cast.profile_path ?
+                (<img src={`https://image.tmdb.org/t/p/w200${cast.profile_path}`} alt={cast.name} />) : (
+                  <div
+                  style={{
+                    height: '300px',
+                    width: '200px',
+                    backgroundColor: 'lightgray',
+                  }}
+                  ></div>
+                  )}
 
                 <p>{cast.name}</p>
               </li>

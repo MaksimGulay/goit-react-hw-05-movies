@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { options } from 'api';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
+import { CardContainer,  CardImage, CardTitle, Item, Items } from './HomeStyled';
 
 const Home = () => {
   const [items, setItems] = useState([]);
@@ -22,26 +23,27 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <CardContainer>
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <ul>
+        <Items>
           {items.map(option => (
-            <li key={option.id}>
+            <Item key={option.id}>
               <Link to={`/movies/${option.id}`} state={{ from: location }}>
-                <img
+              <CardImage
                   src={`https://image.tmdb.org/t/p/w200${option.poster_path}`}
                   alt={option.original_title}
                 />
 
-                <div>{option.title}</div>
+                <CardTitle>{option.title}</CardTitle>
+                
               </Link>
-            </li>
+            </Item>
           ))}
-        </ul>
+        </Items>
       )}
-    </div>
+    </CardContainer>
   );
 };
 

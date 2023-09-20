@@ -31,14 +31,15 @@ const Reviews = () => {
         <div>Loading reviews...</div>
       ) : (
         <ul>
-          {reviews.map(review => (
+          {reviews.length > 0 ? (reviews.map(review => (
             <li key={review.id}>
               <h4>{review.author}</h4>
               <p>{review.content}</p>
             </li>
-          ))}
+          ))) :(<div>No reviews</div>)}
+          
         </ul>
-      )}
+       )}
     </div>
   );
 };
