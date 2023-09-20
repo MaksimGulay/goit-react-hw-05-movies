@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState ,useRef} from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useParams, NavLink, Outlet, useLocation} from 'react-router-dom';
@@ -17,7 +17,7 @@ const MovieDetails = () => {
   const [movieData, setMovieData] = useState(null);
   const { movieId } = useParams();
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? "/";
+  const backLinkHref = useRef(location.state?.from ?? "/");
 
   useEffect(() => {
     const options = getMovieDetailsOptions(movieId);
@@ -38,7 +38,7 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <NavLink to={backLinkHref}>Back to Movies</NavLink>
+      <NavLink to={backLinkHref.current}>Back to Movies</NavLink>
       <h2>{movieData.original_title}</h2>
       <img
         src={`https://image.tmdb.org/t/p/w200${movieData.poster_path}`}
